@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Utilities",
+    "font": "system",
+    "description": "Utility Apps"
+  },
+  {
+    "name": "Network",
+    "font": "lan",
+    "description": "Network Apps"
+  },
+  {
+    "name": "SocailMedia",
+    "font": "share",
+    "description": "Social Media Apps"
+  },
+  {
+    "name": "Media",
+    "font": "movie",
+    "description": "Media Apps"
+  },
+  {
+    "name": "ARR",
+    "font": "download",
+    "description": "ARR Suite Apps"
+  }
+]

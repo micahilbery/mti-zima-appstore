@@ -1,0 +1,53 @@
+name: searxng
+services:
+  searxng:
+    container_name: searxng
+    image: searxng/searxng:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - "8888:8080"
+    volumes:
+      - /DATA/AppData/$AppID/config:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=https://search.ilbery.app
+      - UWSGI_WORKERS=4
+      - UWSGI_THREADS=4
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    x-casaos:
+      envs:
+        - container: SEARXNG_BASE_URL
+          description:
+              en_US: The url of your searXNG instance ex. https://search.example.com
+
+x-casaos:
+  architectures:
+    - amd64
+  main: searxng
+  store_app_id: searxng
+  author: mti
+  category: Utilities
+  description:
+    en_us: SearXNG is a free internet metasearch engine which aggregates results from various search services and databases. Users are neither tracked nor profiled.
+  developer: searxng
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/searxng.webp
+  tagline:
+    en_us: A privacy-respecting, open metasearch engine
+  title:
+    en_us: "SearXNG"
+  port_map: "8888"
+  index: /

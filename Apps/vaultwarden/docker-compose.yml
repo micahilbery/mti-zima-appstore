@@ -1,0 +1,40 @@
+name: vaultwarden
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    network_mode: bridge
+    ports:
+      - 10380:80
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: WebUI HTTP Port
+      volumes:
+        - container: /data
+          description:
+            en_us: Vaultwarden data directory.
+
+x-casaos:
+  architectures:
+    - amd64
+  main: vaultwarden
+  author: mti
+  category: Utilities
+  description:
+    en_us: Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+  developer: Daniel García
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/vaultwarden.webp
+  tagline:
+    en_us: A self-hosted Bitwarden server
+  title:
+    en_us: Vaultwarden
+  index: /
+  port_map: "10380"
