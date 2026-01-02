@@ -1,2 +1,2 @@
-# casaos-mti-appstore
-Custom apstore for casaos
+# mti-zima-appstore
+Custom apstore for ZIMAOS
