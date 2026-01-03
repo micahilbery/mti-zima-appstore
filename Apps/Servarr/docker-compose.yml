@@ -113,6 +113,7 @@ services:
       volumes:
         - container: /gluetun
           description:
+            en_us: Config directory.
 
   deluge:
     image: lscr.io/linuxserver/deluge:latest
