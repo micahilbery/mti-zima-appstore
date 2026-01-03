@@ -62,9 +62,6 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/config/gluetun
         target: /gluetun
-      - type: bind
-        source: /dev/net/tun
-        target: /dev/net/tun
     environment:
       - VPN_SERVICE_PROVIDER=airvpn
       - VPN_TYPE=wireguard
@@ -509,7 +506,6 @@ x-casaos:
     - amd64
     - arm
     - arm64
-    - "386"
   main: homepage
   category: MTI
   developer: Various
@@ -521,9 +517,8 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Servarr/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Servarr/screenshot-1.png
-  thumbnail: ""
-  scheme: ""
-  port_map: "3000"
+  scheme: http
   index: /
   title:
     en_US: Servarr
+  port_map: "3000"
