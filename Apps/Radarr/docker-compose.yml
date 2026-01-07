@@ -1,0 +1,81 @@
+name: radarr
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    network_mode: service:gluetun
+
+    # ports:
+    #   - 7878:7878 # Radarr UI
+
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config/radarr
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/backup/radarr
+        target: /backup
+      - type: bind
+        source: /DATA/Downloads/Complete
+        target: /data/downloads
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /data/movies
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+      volumes:
+        - container: /config
+          description:
+            en_us: Config directory.
+        - container: /backup
+          description:
+            en_us: Backup directory.
+        - container: /data/downloads
+          description:
+            en_us: Downloads directory.
+        - container: /data/movies
+          description:
+            en_us: Movies directory.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: radarr
+  category: MTI
+  developer: Radarr Developers
+  author: MTI
+  tagline:
+    en_US: Find Your Movie Library.
+  description:
+    en_US: Finding and keeping track of your movie library.
+  tips:
+    before_install:
+      en_US: Requires Gluetun already be installed.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Radarr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Radarr/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Radarr/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: Radarr (VPN)
+  port_map: "7878"

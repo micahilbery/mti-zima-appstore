@@ -1,0 +1,56 @@
+name: flaresolverr
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    network_mode: service:gluetun
+
+    # ports:
+    #   - 8191:8191 # Flaresover UI
+
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: flaresolverr
+  category: MTI
+  developer: Flaresolverr Developers
+  author: MTI
+  tagline:
+    en_US: Bypass Cloudflare.
+  description:
+    en_US: Bypass Cloudflare bot checks for automated access.
+  tips:
+    before_install:
+      en_US: Requires Gluetun already be installed.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Flaresolverr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Flaresolverr/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Flaresolverr/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: Flaresolverr (VPN)
+  port_map: "8191"

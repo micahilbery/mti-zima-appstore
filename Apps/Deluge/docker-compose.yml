@@ -1,0 +1,82 @@
+name: deluge
+services:
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    restart: unless-stopped
+    network_mode: service:gluetun
+
+    # ports:
+    #   - 8112:8112 # Deluge UI
+    #   - 6881:6881 # Deluge Incoming port TCP
+    #   - 6881:6881/udp # Deluge Incoming port UDP
+    #   - 58846:58846 # optional # Deluge Outgoing Port TCP
+
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+      - DELUGE_LOGLEVEL=error
+
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads/Incomplete
+        target: /data/incomplete-downloads
+      - type: bind
+        source: /DATA/Downloads/Complete
+        target: /data/downloads
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+      volumes:
+        - container: /config
+          description:
+            en_us: Config directory.
+        - container: /backup
+          description:
+            en_us: Backup directory.
+        - container: /data/incomplete-downloads
+          description:
+            en_us: Incomplete downloads directory.
+        - container: /data/downloads
+          description:
+            en_us: Completed downloads directory.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: deluge
+  category: MTI
+  developer: Deluge Developers
+  author: MTI
+  tagline:
+    en_US: Get all your Linux ISOs.
+  description:
+    en_US: Safely download Linux ISOs.
+  tips:
+    before_install:
+      en_US: Requires Gluetun already be installed.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Deluge/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Deluge/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Deluge/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: Deluge (VPN)
+  port_map: "8112"

@@ -1,0 +1,35 @@
+[
+  {
+    "appid": "gluetun"
+  },
+  {
+    "appid": "sonarr"
+  },
+  {
+    "appid": "radarr"
+  },
+  {
+    "appid": "lidarr"
+  },
+  {
+    "appid": "prolarr"
+  },
+  {
+    "appid": "huntarr"
+  },
+  {
+    "appid": "cleanuparr"
+  },
+  {
+    "appid": "seer"
+  },
+  {
+    "appid": "unmanic"
+  },
+  {
+    "appid": "deluge"
+  },
+  {
+    "appid": "sabnzbd"
+  }
+]

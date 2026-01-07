@@ -1,0 +1,75 @@
+name: servarr
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    network_mode: service:gluetun
+
+    # ports:
+    #  - 9696:9696 # Prowlarr UI
+
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config/powlarr
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/backup/powlarr
+        target: /backup
+      - type: bind
+        source: /DATA/Downloads/Complete
+        target: /data/downloads
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+      volumes:
+        - container: /config
+          description:
+            en_us: Config directory.
+        - container: /backup
+          description:
+            en_us: Backup directory.
+        - container: /data/downloads
+          description:
+            en_us: Downloads directory.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: prowlarr
+  category: MTI
+  developer: Prowlarr Developers
+  author: MTI
+  tagline:
+    en_US: Knows a guy who knows a guy.
+  description:
+    en_US: Search the internet for Linux ISOs.
+  tips:
+    before_install:
+      en_US: Requires Gluetun already be installed.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Prowlarr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Prowlarr/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Prowlarr/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: Prowlarr (VPN)
+  port_map: "9696"

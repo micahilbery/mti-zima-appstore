@@ -1,0 +1,71 @@
+name: cupdate
+services:
+  cupdate:
+    image: ghcr.io/alexgustafsson/cupdate:0.22.2
+    restart: unless-stopped
+    network_mode: bridge
+
+    ports:
+      - 8099:8080
+
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+      - CUPDATE_DOCKER_HOST=unix:///var/run/docker.sock
+      - CUPDATE_CACHE_PATH=/var/run/data/cachev1.boltdb
+      - CUPDATE_DB_PATH=/var/run/data/dbv1.sqlite
+      - CUPDATE_LOGOS_PATH=/var/run/data/logos
+
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /var/run/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - target: /tmp
+        type: tmpfs
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+      volumes:
+        - container: /var/run/data
+          description:
+            en_us: Data directory.
+
+      ports:
+        - container: "8099"
+          description:
+            en_us: WebUI HTTP Port
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: cupdate
+  category: MTI
+  developer: Alex Gustafsson
+  author: MTI
+  tagline:
+    en_US: Know when to update.
+  description:
+    en_US: Letting you know when to update your docker apps.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Cupdate/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Cupdate/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Cupdate/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: Cupdate
+  port_map: "8099"

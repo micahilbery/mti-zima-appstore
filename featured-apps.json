@@ -1,0 +1,11 @@
+[
+  { "appid": "gluetun" },
+  { "appid": "sonarr" },
+  { "appid": "radarr" },
+  { "appid": "lidarr" },
+  { "appid": "readarr" },
+  { "appid": "prowlarr" },
+  { "appid": "huntarr" },
+  { "appid": "cleanuparr" },
+  { "appid": "unmanic" }
+]
