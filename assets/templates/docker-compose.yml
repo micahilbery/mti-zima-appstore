@@ -1,0 +1,66 @@
+name: mti-example
+services:
+  example:
+    image: example.com/example/image:latest
+    restart: unless-stopped
+    network_mode: bridge
+
+    ports:
+      - target: 0000
+        published: "0000"
+        protocol: tcp
+
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+      volumes:
+        - container: /data
+          description:
+            en_us: Data directory.
+
+      ports:
+        - container: "0000"
+          description:
+            en_us: WebUI HTTP Port
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: example
+  category: MTI
+  developer: Example App Developers
+  author: MTI
+  tagline:
+    en_US: Be the example you want to see in the world.
+  description:
+    en_US: An example description of and example app.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Example/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Example/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/Example/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: Example
+  port_map: "0000"

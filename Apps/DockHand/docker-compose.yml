@@ -1,0 +1,70 @@
+name: mti-dockhand
+services:
+  dockhand:
+    image: fnsys/dockhand:latest
+    container_name: dockhand
+    restart: unless-stopped
+    network_mode: bridge
+
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: TimeZone
+        - container: PUID
+          description:
+            en_us: Run as specified uid.
+        - container: PGID
+          description:
+            en_us: Run as specified gid.
+
+      volumes:
+        - container: /data
+          description:
+            en_us: Data directory.
+
+      ports:
+        - container: "3000"
+          description:
+            en_us: WebUI HTTP Port
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: example
+  category: MTI
+  developer: DockHand Developers
+  author: MTI
+  tagline:
+    en_US: Modern Docker management for everyone.
+  description:
+    en_US: A powerful, intuitive Docker platform. Free for homelabs, ready for enterprise.
+  icon: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/DockHand/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/DockHand/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/micahilbery/mti-zima-appstore@main/Apps/DockHand/thumbnail.png
+  scheme: http
+  index: /
+  title:
+    en_US: DockHand
+  port_map: "3000"
