@@ -51,7 +51,7 @@ x-casaos:
     - amd64
     - arm
     - arm64
-  main: example
+  main: dockhand
   category: MTI
   developer: DockHand Developers
   author: MTI
